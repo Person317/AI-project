@@ -3,7 +3,10 @@ import os.path
 
 import tkinter.messagebox
 from tkinter import *
+from tkinter import simpledialog
 
+import PIL
+import PIL.Image, PIL.ImageDraw
 import PIL
 import cv2 as CV
 import numpy as np
@@ -42,7 +45,7 @@ def classes_prompt(self):
     self.proj_name = simpledialog.askstring("Draw Perdiction")
     if os.path.exsist(self.prod_name):
        with open(f"{self.proj_name}/{self.proj_name}_data.pickel", "rb") as f:
-        data = pickel.load(f)
+        data = pickle.load(f)
         self.class1 = data['c1']
         self.class2 = data['c2']
         self.class3 = data['c3']
@@ -59,3 +62,34 @@ def classes_prompt(self):
     self.class1_counter = 1
     self.class2_counter = 1
     self.class3_counter = 1
+
+    self.clf = LinearSVC()
+
+    os.mkdir(self.proj_name)
+    os.chdir(self.proj_name)
+    os.mkdir(self.class1)
+    os.mkdir(self.class2)
+    os.mkdir(self.class3) 
+    os.chdir("..")
+
+def init_gut(self):
+    WIDTH = 500
+    HEIGHT = 500
+    WHITE = (255, 255, 255)
+
+    self.root = Tk()
+    self.root.title(f"NuturalNine Drawing Classifier Alpha v0.2 - {self.proj_name}") 
+
+    self.canvas = Canvas(self.root, width=WIDTH-10, height=HEIGHT-10, bg="white")
+    self.canvas.pack(expand=YES, fill=BOTH)
+    self.canvas.bind("<B1-Motion", self.paint)
+    
+    self.image1 = PIL.Image.new("RGB", (WIDTH, HEIGHT), WHITE)
+    self.draw = PIL.ImageDraw.Draw(self.image1)
+
+    btn_frame = tkinter.Frame(self.root)
+    btn_frame.pack(fill=X, side=BOTTOM)
+    
+
+def paint(self, event):
+   pass
