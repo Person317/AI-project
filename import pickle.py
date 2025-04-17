@@ -90,6 +90,53 @@ def init_gut(self):
     btn_frame = tkinter.Frame(self.root)
     btn_frame.pack(fill=X, side=BOTTOM)
     
+    btn_frame.columnconfigure(0, weight=1)
+    btn_frame.columnconfigure(1, weight=1)
+    btn_frame.columnconfigure(2, weight=1)
+
+
+    class1_btn = Button(btn_frame, text=self.class1, command=lambda: self.save(1))
+    class1_btn.grid(row=0, column=0, sticky=W + E)
+
+    class2_btn = Button(btn_frame, text=self.class2, command=lambda: self.save(2))
+    class2_btn.grid(row=0, column=0, sticky=W + E)
+
+    class3_btn = Button(btn_frame, text=self.class3, command=lambda: self.save(3))
+    class3_btn.grid(row=0, column=0, sticky=W + E)
+
+    bm_btn = Button(btn_frame, text="Brush-", command=self.brushminus)
+    bm_btn.grid(row=1, column=0, sticky=W+E)
+
+    clear_btn = Button(btn_frame, text="Clear", command=self.clear)
+    clear_btn.grid(row=1, column=1, sticky=W+E)
+
+    bp_btn = Button(btn_frame, text="Brush+", command=self.brushplus)
+    bp_btn.grid(row=1, column=2, sticky=W+E)
+
+    train_btn = Button(btn_frame, text="Train Model", command=self.train_model)
+    train_btn.grid(row=2, column=0, sticky=W+E)
+
+    save_btn = Button(btn_frame, text="Save Model", command=self.save_model)
+    save_btn.grid(row=2, column=1, sticky=W+E)
+
+    load_btn = Button(btn_frame, text="Load Model", command=self.load_model)
+    load_btn.grid(row=2, column=2, sticky=W+E)
+
+    change_btn = Button(btn_frame, text="Brush-", command=self.brushminus)
+    change_btn.grid(row=1, column=2, sticky=W+E)
+
 
 def paint(self, event):
+   pass
+
+def save(self, class_num):
+   pass
+
+def brushminus(self):
+   pass
+
+def brushplus(self):
+   pass
+
+def clear(self):
    pass
