@@ -122,9 +122,22 @@ def init_gut(self):
     load_btn = Button(btn_frame, text="Load Model", command=self.load_model)
     load_btn.grid(row=2, column=2, sticky=W+E)
 
-    change_btn = Button(btn_frame, text="Brush-", command=self.brushminus)
+    change_btn = Button(btn_frame, text="Rotate Model", command=self.rotate_model)
     change_btn.grid(row=1, column=2, sticky=W+E)
 
+    predict_btn = Button(btn_frame, text="Predict Model", command=self.predict_model)
+    predict_btn.grid(row=1, column=2, sticky=W+E)
+    
+    save_everything_btn = Button(btn_frame, text="Save Everything", command=self.save_everything)
+    save_everything_btn.grid(row=1, column=2, sticky=W+E)
+
+    self.status_lable = Label(btn_frame, text=f"current Model: {type(self.clf).__name__}")
+    self.status_label.config(font=("Arial", 10))
+    self.status_label.grid(row=4, column=1, sticky=W + E)
+
+    self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
+    self.root.attributes("-topmost", True)
+    self.root.mainloop()
 
 def paint(self, event):
    pass
@@ -133,10 +146,33 @@ def save(self, class_num):
    pass
 
 def brushminus(self):
-   pass
+   if self.brush_width > 1:
+      self.brush_width += 1
 
 def brushplus(self):
+   self.brush_width += 1
+   
+def clear(self):
+   self.canvas.delete("all")
+   slaf.draw.rectangle([0, 0, 1000, 1000], fill="white")
+
+def train_model(self):
    pass
 
-def clear(self):
+def predict(self):
+   pass
+
+def rotate_model(self):
+   pass 
+
+def save_model(self):
+   pass
+
+def load_model(self):
+   pass
+
+def save_everything(self):
+   pass
+
+def on_closing(self):
    pass
