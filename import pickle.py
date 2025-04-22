@@ -38,7 +38,7 @@ class DrawingClassifier:
     self.init_gui
 
 
-def classes_prompt(self):
+ def classes_prompt(self):
     msg =Tk()
     msg.withdraw()
 
@@ -72,7 +72,7 @@ def classes_prompt(self):
     os.mkdir(self.class3) 
     os.chdir("..")
 
-def init_gut(self):
+ def init_gut(self):
     WIDTH = 500
     HEIGHT = 500
     WHITE = (255, 255, 255)
@@ -139,40 +139,60 @@ def init_gut(self):
     self.root.attributes("-topmost", True)
     self.root.mainloop()
 
-def paint(self, event):
-   pass
+ def paint(self, event):
+   x1, y1 = (event.x - 1), (event.y - 1)
+   x2, y2 = (event.x + 1), (event.y + 1)
+   self.canvas.create_rectangle(x1, y1, x2, y2, fill="black", width=self.brush_width)
+   self.draw.rectangle([x1, y2, x2 + self.brush_width, y2 + self.brush_width], fill="black", width=self.brush_width)
 
-def save(self, class_num):
-   pass
+ def save(self, class_num):
+    self.image1.save("temp.png")
+    img = PIL.Image.open("temp.png")
+    img.thumbnail((50, 50), PIL.Image.ANTIALIAS)
 
-def brushminus(self):
+    if class_num == 1:
+       img.save(f"{self.proj_name}/{self.class1}/{self.class1_counter}.png", "PNG")
+       self.class1_counter += 1
+    elif class_num == 2:
+       img.save(f"{self.proj_name}/{self.class2}/{self.class2_counter}.png", "PNG")
+       self.class2_counter += 1
+    elif class_num == 3:
+       img.save(f"{self.proj_name}/{self.class3}/{self.class3_counter}.png", "PNG")
+       self.class3_counter += 1
+
+    self.clear()
+
+ def brushminus(self):
    if self.brush_width > 1:
-      self.brush_width += 1
+      self.brush_width -= 1
 
-def brushplus(self):
+ def brushplus(self):
    self.brush_width += 1
    
-def clear(self):
+ def clear(self):
    self.canvas.delete("all")
-   slaf.draw.rectangle([0, 0, 1000, 1000], fill="white")
+   self.draw.rectangle([0, 0, 1000, 1000], fill="white")
 
-def train_model(self):
+ def train_model(self):
    pass
 
-def predict(self):
+ def predict(self):
    pass
 
-def rotate_model(self):
+ def rotate_model(self):
    pass 
 
-def save_model(self):
+ def save_model(self):
    pass
 
-def load_model(self):
+ def load_model(self):
    pass
 
-def save_everything(self):
+ def save_everything(self):
    pass
 
-def on_closing(self):
+ def on_closing(self):
    pass
+ 
+DrawingClassifier()
+
