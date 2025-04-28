@@ -35,15 +35,15 @@ class DrawingClassifier:
     self.brush_width = 15
 
     self.classes_prompt()
-    self.init_gui
+    self.init_gui()
 
 
  def classes_prompt(self):
     msg =Tk()
     msg.withdraw()
 
-    self.proj_name = simpledialog.askstring("Draw Perdiction")
-    if os.path.exsist(self.prod_name):
+    self.proj_name = simpledialog.askstring(("Draw Prediction", "Enter your project name:"))
+    if os.path.exsist(self.proj_name):
        with open(f"{self.proj_name}/{self.proj_name}_data.pickel", "rb") as f:
         data = pickle.load(f)
         self.class1 = data['c1']
@@ -52,7 +52,7 @@ class DrawingClassifier:
         self.class1_counter = data['c1c']
         self.class2_counter = data['c2c']
         self.class3_counter = data['c3c']
-        self.clif = data['clf']
+        self.clf = data['clf']
         self.proj_name = data['pname']
     else:
       self.class1 = simpledialog.askstring("Class 1"," What is the first class called", parent=msg)
@@ -99,10 +99,10 @@ class DrawingClassifier:
     class1_btn.grid(row=0, column=0, sticky=W + E)
 
     class2_btn = Button(btn_frame, text=self.class2, command=lambda: self.save(2))
-    class2_btn.grid(row=0, column=0, sticky=W + E)
+    class2_btn.grid(row=0, column=1, sticky=W + E)
 
     class3_btn = Button(btn_frame, text=self.class3, command=lambda: self.save(3))
-    class3_btn.grid(row=0, column=0, sticky=W + E)
+    class3_btn.grid(row=0, column=2, sticky=W + E)
 
     bm_btn = Button(btn_frame, text="Brush-", command=self.brushminus)
     bm_btn.grid(row=1, column=0, sticky=W+E)
