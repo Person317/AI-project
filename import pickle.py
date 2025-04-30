@@ -16,6 +16,7 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
 
 class DrawingClassifier: 
 
@@ -219,7 +220,15 @@ class DrawingClassifier:
       tkinter.messagebox.showinfo("My Drawing Classifier", f"The drawing is probably a {self.class3}", parent=self.root)
 
  def rotate_model(self):
-   pass 
+     if isinstance(self.clf, LinearSVC):
+       self.clf = KNeighborsClassifier()
+     elif isinstance(self.clf, KNeighborsClassifier):
+       self.clf = LogisticRegression()
+     elif isinstance(self.clf, LogisticRegression):
+       self.clf = DecisionTreeClassifier()
+     elif isinstance(self.clf, DecisionTreeClassifier):
+       self.clf = RandomForestClassifier()
+       
 
  def save_model(self):
    pass
