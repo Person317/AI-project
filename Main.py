@@ -3,7 +3,7 @@ import os.path
 
 import tkinter.messagebox
 from tkinter import *
-from tkinter import simpledialog
+from tkinter import simpledialog, filedialog
 
 import PIL
 import PIL.Image, PIL.ImageDraw
@@ -227,17 +227,29 @@ class DrawingClassifier:
      elif isinstance(self.clf, LogisticRegression):
        self.clf = DecisionTreeClassifier()
      elif isinstance(self.clf, DecisionTreeClassifier):
-       self.clf = RandomForestClassifier()
-       
+       self.clf = GaussianNB()
+     elif isinstance(self.clf, GaussianNB):
+       self.clf = LinearSVC()
+
+     self.status_label.config(text=f"Current Model: {type(self.clf).__name__}")
 
  def save_model(self):
-   pass
-
+     file_path = filedialog.asksaveasfilename(defultextention="pickle")
+     with open(file_path, "wb") as f:
+       pickle.dump(self.clf, f)
+     tkinter.messagebox.showinfo("My Drawing Classifier", "Model Sucessfully Saved", parent=self.root)
+        
  def load_model(self):
-   pass
+     file_path = filedialog.askopenfilename()
+     with open(file_path, "rb") as f:
+          self.clf = pickle.load(f)
+     tkinter.messagebox.showinfo("My Drawing Classifier" "Model successfully loaded!", parent=self.root)
 
  def save_everything(self):
-   pass
+     data = {"c1": self.class1, "c2": self.class2, "c3": self.class3, "c1c": self.class1_counter, "c2c": self.class2_counter, "c3c": self.class3_counter, "clf": self.clf, "pname": self.proj_name}
+     with open(f"{self.proj_name}/{self.proj_name}_data.pickle", "wb") as f:
+        pickle.dump(data, f)
+     tkinter.messagebox.showinfo("My Drawing Classifier" "Project successfully saved!", parent=self.root)
 
  def on_closing(self):
    pass
