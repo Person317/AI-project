@@ -43,9 +43,9 @@ class DrawingClassifier:
     msg =Tk()
     msg.withdraw()
 
-    self.proj_name = simpledialog.askstring(("Draw Prediction", "Enter your project name:"))
-    if os.path.exsist(self.proj_name):
-       with open(f"{self.proj_name}/{self.proj_name}_data.pickel", "rb") as f:
+    self.proj_name = simpledialog.askstring(("Draw Prediction", "My Drawing Classifier"))
+    if os.path.exists(self.proj_name):
+       with open(f"{self.proj_name}/{self.proj_name}_data.pickle", "rb") as f:
         data = pickle.load(f)
         self.class1 = data['c1']
         self.class2 = data['c2']
@@ -132,7 +132,7 @@ class DrawingClassifier:
     save_everything_btn = Button(btn_frame, text="Save Everything", command=self.save_everything)
     save_everything_btn.grid(row=1, column=2, sticky=W+E)
 
-    self.status_lable = Label(btn_frame, text=f"current Model: {type(self.clf).__name__}")
+    self.status_label = Label(btn_frame, text=f"current Model: {type(self.clf).__name__}")
     self.status_label.config(font=("Arial", 10))
     self.status_label.grid(row=4, column=1, sticky=W + E)
 
@@ -206,14 +206,14 @@ class DrawingClassifier:
  def predict(self):
      self.image1.save("temp.png")
      img = PIL.Image.open("temp.png")
-     img.thumbnaiol((50, 50), PIL.Image.ANTIALIAS)
+     img.thumbnail((50, 50), PIL.Image.Resampling.LANCZOS)
      img.save("predictshape.png", "PNG")
 
      img = cv.imread("predictshape.png")[:, :, 0]
      img = img.reshape(2500)
      prediction = self.clf.predict([img])
      if prediction [0] == 1:
-      tkinter.messagebox.showinfo("My Drawing Classifier", f"The drawing is probably a {self.class1}", parent=self.root)
+      tkinter.messagebox.showinfo("C", f"The drawing is probably a {self.class1}", parent=self.root)
      if prediction [0] == 2:
       tkinter.messagebox.showinfo("My Drawing Classifier", f"The drawing is probably a {self.class2}", parent=self.root)
      if prediction [0] == 3:
@@ -243,16 +243,21 @@ class DrawingClassifier:
      file_path = filedialog.askopenfilename()
      with open(file_path, "rb") as f:
           self.clf = pickle.load(f)
-     tkinter.messagebox.showinfo("My Drawing Classifier" "Model successfully loaded!", parent=self.root)
+     tkinter.messagebox.showinfo("My Drawing Classifier", "Model successfully loaded!", parent=self.root)
 
  def save_everything(self):
      data = {"c1": self.class1, "c2": self.class2, "c3": self.class3, "c1c": self.class1_counter, "c2c": self.class2_counter, "c3c": self.class3_counter, "clf": self.clf, "pname": self.proj_name}
      with open(f"{self.proj_name}/{self.proj_name}_data.pickle", "wb") as f:
         pickle.dump(data, f)
-     tkinter.messagebox.showinfo("My Drawing Classifier" "Project successfully saved!", parent=self.root)
+     tkinter.messagebox.showinfo("My Drawing Classifier", "Project successfully saved!", parent=self.root)
 
  def on_closing(self):
-   pass
+     answer = tkinter.messagebox.askyesnocancel("Quit?" ,"Do you want to sqave your work?", parent=self.root)
+     if answer is not None:
+        if answer:
+           self.save_everything()
+        self.root.destroy()
+        exit()
  
 DrawingClassifier()
 
